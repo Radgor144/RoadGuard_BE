@@ -17,7 +17,7 @@ public class EarDataController {
 
     @MessageMapping("/ear-data")
     public void handleEarMessage(@Valid EarMessage message) {
-        log.info("Received EAR message from client. Value: {}", message.getEar());
-        earService.addEarValue(message.getDriverId(), message.getEar());
+        log.info("Received EAR message from client. Value: {}", message.ear());
+        earService.addEarValue(message.driverId(), message.ear());
     }
 }

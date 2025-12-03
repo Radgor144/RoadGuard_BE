@@ -20,8 +20,8 @@ public class DashboardController {
 
     @PostMapping("/ear-data")
     public List<EarDataResponse> getEarData(@RequestBody EarRangeRequest request) {
-        return dashboardService.getEarData(request.getDriverId(),
-                                           request.getStartTime(),
-                                           request.getEndTime());
+        return dashboardService.getEarData(request.driverId(),
+                                           request.startTime(),
+                                           request.endTime());
     }
 }
