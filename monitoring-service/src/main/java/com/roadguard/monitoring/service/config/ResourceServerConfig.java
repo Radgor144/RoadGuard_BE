@@ -14,8 +14,9 @@ public class ResourceServerConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest()
-                        .authenticated()
+                        // allow websocket handshake and related requests without JWT for now
+                        .requestMatchers("/driver-monitor", "/driver-monitor/**").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
         return http.build();
