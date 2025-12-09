@@ -21,6 +21,6 @@ public class EndTripController {
     @PostMapping
     public void endTrip(@AuthenticationPrincipal Jwt jwt, @RequestBody EndTripRequest endTripRequest) {
         UUID driverId = UUID.fromString(jwt.getClaim("driverId"));
-        endTripService.endTrip(endTripRequest, driverId);
+        endTripService.endTrip(driverId, endTripRequest);
     }
 }
