@@ -15,14 +15,14 @@ import java.util.UUID;
 public class EndTripService {
     private final EndTripRepository endTripRepository;
 
-    public void endTrip(EndTripRequest request) {
-        TripEntity trip = mapToEntity(request);
+    public void endTrip(UUID driverId, EndTripRequest request) {
+        TripEntity trip = mapToEntity(driverId, request);
         endTripRepository.save(trip);
     }
 
-    private TripEntity mapToEntity(EndTripRequest request) {
+    private TripEntity mapToEntity(UUID driverId, EndTripRequest request) {
         TripEntity trip = TripEntity.builder().id(UUID.randomUUID())
-                                              .driverId(request.driverId())
+                                              .driverId(driverId)
                                               .startTime(request.startTime())
                                               .endTime(request.endTime())
                                               .build();
