@@ -17,8 +17,7 @@ public class SecurityConfig {
             .cors(Customizer.withDefaults())
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authorize -> authorize
-//                    TODO: check
-                  .requestMatchers("/driver-monitor/", "/driver-monitor/**").permitAll()
+                  .requestMatchers("/driver-monitor/**").permitAll()
                   .anyRequest().authenticated()
             )
             .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
