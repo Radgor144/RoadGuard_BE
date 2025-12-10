@@ -47,7 +47,5 @@ public class EarService {
         data.setAverageEar(average);
         data.setTimestamp(LocalDateTime.now());
         repository.save(data);
-
-        log.info("Driver {}: Średnie EAR = {:.3f} z {} próbek", driverId, average);
     }
 }
