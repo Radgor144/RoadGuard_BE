@@ -21,7 +21,7 @@ import java.util.UUID;
 public class DashboardService {
     private final EarDataRepository earDataRepository;
     private final BreakEntityRepository breakEntityRepository;
-    private static final int MAX_POINTS = 60;
+    private static final int MAX_POINTS = 250;
 
     public DashboardDataResponse getEarData(UUID driverId, LocalDateTime startTime, LocalDateTime endTime) {
         List<EarData> allData = earDataRepository.findByDriverIdAndTimestampBetweenOrderByTimestampAsc(driverId, startTime, endTime);
