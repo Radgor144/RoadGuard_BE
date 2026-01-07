@@ -13,7 +13,6 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
 @Configuration
 @RequiredArgsConstructor
@@ -22,14 +21,20 @@ public class DefaultSecurityConfig {
     private final JwtDecoder jwtDecoder;
 
     @Bean
+    @Order(0)
+    public SecurityFilterChain swaggerFilterChain(HttpSecurity http) throws Exception {
+        http.securityMatcher("/swagger-ui/**", "/v3/api-docs/**")
+                .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
+                .csrf(csrf -> csrf.disable());
+        return http.build();
+    }
+
+    @Bean
     @Order(1)
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
                 .oidc(oidc -> oidc.clientRegistrationEndpoint(clientRegistration -> {}));
-
-        http.exceptionHandling(exceptions ->
-                exceptions.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")));
 
         return http.build();
     }
@@ -41,7 +46,6 @@ public class DefaultSecurityConfig {
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/api/users/register").permitAll()
                         .requestMatchers("/api/users/login").permitAll()
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf.disable())

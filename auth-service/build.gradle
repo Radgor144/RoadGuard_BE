@@ -7,7 +7,6 @@ dependencies {
 
     runtimeOnly 'org.postgresql:postgresql'
 
-    testImplementation 'org.springframework.security:spring-security-test'
 }
 
 tasks.named('bootJar') {
